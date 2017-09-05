@@ -1,6 +1,10 @@
 package com.delta.servicelearning;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
@@ -19,18 +23,38 @@ public class MyService extends Service {
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
-        return null;
+        return myBinder;
     }
 
     @Override
     public void onCreate() {
         super.onCreate();
-        Log.i(TAG, "onCreate: ");
+        Log.i(TAG, "onCreate: " + Thread.currentThread().getId());
+        /*NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        Notification.Builder builder = new Notification.Builder(this);
+        Intent notificationIntent = new Intent(this, MainActivity.class);
+        PendingIntent contentIntent = PendingIntent.getActivities(this, 0, new Intent[]{notificationIntent}, PendingIntent.FLAG_CANCEL_CURRENT);
+        builder.setContentTitle("这是通知的标题")
+                .setContentText("这是通知的内容")
+                .setContentIntent(contentIntent);
+        Notification notification = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
+            notification = builder.build();
+        }
+        manager.notify(1, notification);*/
+        //startForeground(1,notification);
+
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.i(TAG, "onStartCommand: ");
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Log.i(TAG, "onStartCommand run: " + Thread.currentThread().getId());
+            }
+        }).start();
         return super.onStartCommand(intent, flags, startId);
     }
 
@@ -43,6 +67,12 @@ public class MyService extends Service {
     class MyBinder extends Binder {
         public void startDownLoad() {
             Log.i(TAG, "startDownLoad: ");
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    Log.i(TAG, "startDownLoad run: " + Thread.currentThread().getId());
+                }
+            }).start();
         }
     }
 }
