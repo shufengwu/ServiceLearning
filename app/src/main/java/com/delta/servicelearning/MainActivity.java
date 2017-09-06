@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.IBinder;
+import android.os.Process;
+import android.os.RemoteException;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,6 +24,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button btnBind;
     private Button btnUnbind;
     private MyService.MyBinder myBinder;
+    private MyAidlService myAIDLService;
 
     private ServiceConnection connection = new ServiceConnection() {
         @Override
@@ -29,6 +32,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Log.i(TAG, "onServiceConnected: ");
             myBinder = (MyService.MyBinder) service;
             myBinder.startDownLoad();
+            myAIDLService = MyAidlService.Stub.asInterface(service);
+            try {
+                int result = myAIDLService.plus(3, 5);
+                String upperStr = myAIDLService.toUpperCase("Hello World");
+                Log.i(TAG, "onServiceConnected: " + result);
+                Log.i(TAG, "onServiceConnected: " + upperStr);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
         }
 
         @Override
@@ -41,7 +53,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Log.i(TAG, "onCreate: "+Thread.currentThread().getId());
+        Log.i(TAG, "onCreate: " + Thread.currentThread().getId());
+        Log.i(TAG, "onCreate: " + Process.myPid());
         btnStart = (Button) findViewById(R.id.btn_start);
         btnStart.setOnClickListener(this);
         btnStop = (Button) findViewById(R.id.btn_stop);
