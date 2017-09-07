@@ -10,6 +10,7 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/clienttest" />
+            <option value="$PROJECT_DIR$/intentservicetest" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

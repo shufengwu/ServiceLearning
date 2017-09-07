@@ -1,1 +1,1 @@
-include ':app', ':clienttest'
+include ':app', ':clienttest', ':intentservicetest'

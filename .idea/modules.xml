@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/ServiceLearning.iml" filepath="$PROJECT_DIR$/ServiceLearning.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/clienttest/clienttest.iml" filepath="$PROJECT_DIR$/clienttest/clienttest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/intentservicetest/intentservicetest.iml" filepath="$PROJECT_DIR$/intentservicetest/intentservicetest.iml" />
     </modules>
   </component>
 </project>
